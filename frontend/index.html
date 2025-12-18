@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Email Rewriter</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f4f6f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .card {
+      background: white;
+      padding: 25px;
+      width: 420px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    }
+    textarea, select, button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+    }
+    button {
+      background: #4f46e5;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #4338ca;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h2>✉️ AI Email Rewriter</h2>
+
+  <textarea id="text" rows="5" placeholder="Enter your message..."></textarea>
+
+  <select id="tone">
+    <option value="professional">Professional</option>
+    <option value="polite">Polite</option>
+    <option value="assertive">Assertive</option>
+    <option value="friendly">Friendly</option>
+  </select>
+
+  <button onclick="rewrite()">Rewrite</button>
+
+  <textarea id="output" rows="5" placeholder="Rewritten message..." readonly></textarea>
+</div>
+
+<script>
+async function rewrite() {
+  const text = document.getElementById("text").value;
+  const tone = document.getElementById("tone").value;
+
+  const response = await fetch("http://localhost:8000/rewrite", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ text, tone })
+  });
+
+  const data = await response.json();
+  document.getElementById("output").value = data.rewritten;
+}
+</script>
+
+</body>
+</html>
