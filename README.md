@@ -1,3 +1,5 @@
+gen ai project 
+
 Run this instead of uvicorn:
 python -m uvicorn app:app --reload
 
